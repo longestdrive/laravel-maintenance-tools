@@ -14,20 +14,25 @@ use RecursiveIteratorIterator;
 class FindDuplicateClassesAndFiles extends Command
 {
     private const LOG_FILE_PREFIX = 'duplicate_scan_';
+
     private const LOG_FILE_EXT = '.log';
+
     private const PHP_EXT = 'php';
 
     protected $signature = 'scan:duplicates {folder : Folder to scan (relative to project root)}';
+
     protected $description = 'Scan for duplicate class names and file names in a folder recursively';
 
     private array $classNames = [];
+
     private array $fileNames = [];
+
     private array $duplicates = ['classes' => [], 'files' => []];
 
     public function handle(): int
     {
         $folder = $this->validateFolder();
-        if (!$folder) {
+        if (! $folder) {
             return 1;
         }
 
@@ -38,16 +43,19 @@ class FindDuplicateClassesAndFiles extends Command
         $logPath = $this->writeToLogFile($output);
 
         $this->info("Scan complete. Results written to: $logPath");
+
         return 0;
     }
 
     private function validateFolder(): string|false
     {
         $folder = base_path($this->argument('folder'));
-        if (!is_dir($folder)) {
+        if (! is_dir($folder)) {
             $this->error("Folder not found: $folder");
+
             return false;
         }
+
         return $folder;
     }
 
@@ -100,12 +108,12 @@ class FindDuplicateClassesAndFiles extends Command
 
         $output = '';
 
-        if (!empty($this->duplicates['classes'])) {
+        if (! empty($this->duplicates['classes'])) {
             $output .= "Duplicate class names:\n";
             $output .= $this->formatDuplicatesList($this->duplicates['classes']);
         }
 
-        if (!empty($this->duplicates['files'])) {
+        if (! empty($this->duplicates['files'])) {
             $output .= "Duplicate file names:\n";
             $output .= $this->formatDuplicatesList($this->duplicates['files']);
         }
@@ -122,6 +130,7 @@ class FindDuplicateClassesAndFiles extends Command
                 $output .= "    - $path\n";
             }
         }
+
         return $output;
     }
 
@@ -129,6 +138,7 @@ class FindDuplicateClassesAndFiles extends Command
     {
         $logPath = $this->generateLogPath();
         file_put_contents($logPath, $content);
+
         return $logPath;
     }
 
@@ -136,18 +146,19 @@ class FindDuplicateClassesAndFiles extends Command
     {
         $logDir = storage_path('logs');
         $nextIndex = $this->getNextLogFileIndex($logDir);
-        return $logDir . '/' . self::LOG_FILE_PREFIX . $nextIndex . self::LOG_FILE_EXT;
+
+        return $logDir.'/'.self::LOG_FILE_PREFIX.$nextIndex.self::LOG_FILE_EXT;
     }
 
     private function getNextLogFileIndex(string $logDir): int
     {
-        $pattern = self::LOG_FILE_PREFIX . '*' . self::LOG_FILE_EXT;
-        $files = glob($logDir . '/' . $pattern);
+        $pattern = self::LOG_FILE_PREFIX.'*'.self::LOG_FILE_EXT;
+        $files = glob($logDir.'/'.$pattern);
 
         $maxIndex = 0;
         foreach ($files as $file) {
-            if (preg_match('/' . preg_quote(self::LOG_FILE_PREFIX, '/') . '(\d+)' . preg_quote(self::LOG_FILE_EXT, '/') . '$/', $file, $matches)) {
-                $maxIndex = max($maxIndex, (int)$matches[1]);
+            if (preg_match('/'.preg_quote(self::LOG_FILE_PREFIX, '/').'(\d+)'.preg_quote(self::LOG_FILE_EXT, '/').'$/', $file, $matches)) {
+                $maxIndex = max($maxIndex, (int) $matches[1]);
             }
         }
 

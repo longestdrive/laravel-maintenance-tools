@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Longestdrive\LaravelMaintenanceTools\Tests;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Filesystem\Filesystem;
 
 class FindDuplicateClassesAndFilesTest extends TestCase
@@ -16,13 +15,13 @@ class FindDuplicateClassesAndFilesTest extends TestCase
         parent::setUp();
         // Register the command so output is captured
         $this->app->singleton(\Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles::class, function ($app) {
-            return new \Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles();
+            return new \Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles;
         });
         $this->app['Illuminate\\Contracts\\Console\\Kernel']->registerCommand(
             $this->app->make(\Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles::class)
         );
         $this->testDir = base_path('tests/tmp_duplicates');
-        if (!is_dir($this->testDir)) {
+        if (! is_dir($this->testDir)) {
             mkdir($this->testDir, 0777, true);
         }
         // Clean up old log files
@@ -34,7 +33,7 @@ class FindDuplicateClassesAndFilesTest extends TestCase
 
     protected function tearDown(): void
     {
-        $fs = new Filesystem();
+        $fs = new Filesystem;
         if (is_dir($this->testDir)) {
             $fs->deleteDirectory($this->testDir);
         }
@@ -52,7 +51,7 @@ class FindDuplicateClassesAndFilesTest extends TestCase
         file_put_contents($this->testDir.'/B.php', "<?php\nclass B {}");
 
         $this->artisan('scan:duplicates', ['folder' => 'tests/tmp_duplicates'])
-            ->expectsOutput('Scan complete. Results written to: ' . storage_path('logs/duplicate_scan_1.log'))
+            ->expectsOutput('Scan complete. Results written to: '.storage_path('logs/duplicate_scan_1.log'))
 
             ->assertExitCode(0);
 
@@ -69,7 +68,7 @@ class FindDuplicateClassesAndFilesTest extends TestCase
         file_put_contents($this->testDir.'/B.php', "<?php\nclass Foo {}");
 
         $this->artisan('scan:duplicates', ['folder' => 'tests/tmp_duplicates'])
-            ->expectsOutput('Scan complete. Results written to: ' . storage_path('logs/duplicate_scan_1.log'))
+            ->expectsOutput('Scan complete. Results written to: '.storage_path('logs/duplicate_scan_1.log'))
             ->assertExitCode(0);
 
         $logs = glob(storage_path('logs/duplicate_scan_*.log'));
@@ -88,7 +87,7 @@ class FindDuplicateClassesAndFilesTest extends TestCase
         file_put_contents($this->testDir.'/sub/A.php', "<?php\nclass B {}");
 
         $this->artisan('scan:duplicates', ['folder' => 'tests/tmp_duplicates'])
-            ->expectsOutput('Scan complete. Results written to: ' . storage_path('logs/duplicate_scan_1.log'))
+            ->expectsOutput('Scan complete. Results written to: '.storage_path('logs/duplicate_scan_1.log'))
 
             ->assertExitCode(0);
 

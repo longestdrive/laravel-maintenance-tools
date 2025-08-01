@@ -50,8 +50,8 @@ class RepairMigrationTableCommand extends Command
         $latestBatch = $this->getLatestMigrationBatch();
 
         collect($migrationFiles)
-            ->filter(fn(string $file) => !in_array($file, self::DIRECTORY_ENTRIES))
-            ->each(fn(string $file) => $this->processMigrationFile($file, $latestBatch));
+            ->filter(fn (string $file) => ! in_array($file, self::DIRECTORY_ENTRIES))
+            ->each(fn (string $file) => $this->processMigrationFile($file, $latestBatch));
 
         return 0;
     }
@@ -76,7 +76,7 @@ class RepairMigrationTableCommand extends Command
             ->where('migration', '=', $migrationName)
             ->first();
 
-        if (!$existingMigration) {
+        if (! $existingMigration) {
             $this->insertMigration($migrationName, $latestBatch->batch + 1);
         }
     }

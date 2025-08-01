@@ -30,4 +30,3 @@ return [
     */
     'log_retention_days' => 30,
 ];
-

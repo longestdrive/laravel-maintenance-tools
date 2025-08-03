@@ -52,7 +52,6 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
     /**
      * Register scheduled tasks with the Laravel scheduler.
      *
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function registerScheduledTasks(Schedule $schedule)
@@ -74,9 +73,6 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
     /**
      * Schedule a command based on configuration.
      *
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
-     * @param string $command
-     * @param array $config
      * @return void
      */
     protected function scheduleCommand(Schedule $schedule, string $command, array $config)
@@ -123,9 +119,6 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
 
     /**
      * Get the day number for a day name.
-     *
-     * @param string $day
-     * @return int
      */
     protected function getDayNumber(string $day): int
     {

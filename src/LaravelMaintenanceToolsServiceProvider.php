@@ -139,6 +139,6 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
             'saturday' => 6,
         ];
 
-        return $days[strtolower($day)] ?? 1; // Default to Monday
+        return $days[strtolower($day)] ?? 1;
     }
 }

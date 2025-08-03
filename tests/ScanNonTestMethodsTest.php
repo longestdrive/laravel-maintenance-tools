@@ -10,7 +10,7 @@ class ScanNonTestMethodsTest extends TestCase
     {
         parent::setUp();
         // Ensure logs directory exists
-        if (!is_dir(storage_path('logs'))) {
+        if (! is_dir(storage_path('logs'))) {
             mkdir(storage_path('logs'), 0777, true);
         }
     }
@@ -29,10 +29,10 @@ class ScanNonTestMethodsTest extends TestCase
     public function it_logs_non_test_methods_with_at_test_docblock()
     {
         $testDir = base_path('tests/ScanNonTestMethodsTestTmp');
-        if (!is_dir($testDir)) {
+        if (! is_dir($testDir)) {
             mkdir($testDir, 0777, true);
         }
-        $testFile = $testDir . '/ExampleTest.php';
+        $testFile = $testDir.'/ExampleTest.php';
         file_put_contents($testFile, <<<'PHP'
 <?php
 class ExampleTest {
@@ -42,7 +42,7 @@ class ExampleTest {
     public function setUp() {}
 }
 PHP
-);
+        );
         // Run the command
         $this->artisan(ScanNonTestMethods::class)
             ->expectsOutputToContain('Scan complete. Results written to:')
@@ -62,4 +62,3 @@ PHP
         rmdir($testDir);
     }
 }
-

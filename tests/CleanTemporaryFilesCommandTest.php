@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Longestdrive\LaravelMaintenanceTools\Tests;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Longestdrive\LaravelMaintenanceTools\Commands\CleanTemporaryFilesCommand;
 
 class CleanTemporaryFilesCommandTest extends TestCase
@@ -16,7 +16,6 @@ class CleanTemporaryFilesCommandTest extends TestCase
         parent::setUp();
         Log::spy();
     }
-
 
     public function test_it_cleans_temp_files_when_directory_exists_and_is_cleaned()
     {
@@ -41,7 +40,6 @@ class CleanTemporaryFilesCommandTest extends TestCase
         Log::shouldHaveReceived('info')->with('command clean:tempfiles was run');
     }
 
-
     public function test_it_reports_error_when_directory_exists_but_not_cleaned()
     {
         $filesystem = $this->createMock(Filesystem::class);
@@ -63,7 +61,6 @@ class CleanTemporaryFilesCommandTest extends TestCase
             ->expectsOutput('Clean up process complete')
             ->assertExitCode(1);
     }
-
 
     public function test_it_reports_error_when_directory_is_missing()
     {

@@ -60,13 +60,19 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
         $scheduleConfig = config('maintenance-tools.schedule', []);
 
         // Schedule clean:tempfiles command
-        if (isset($scheduleConfig['clean_temp_files']) && $scheduleConfig['clean_temp_files']['enabled'] ?? true) {
-            $this->scheduleCommand($schedule, 'clean:tempfiles', $scheduleConfig['clean_temp_files']);
+        if (isset($scheduleConfig['clean_temp_files'])) {
+            $enabled = $scheduleConfig['clean_temp_files']['enabled'] ?? true;
+            if ($enabled) {
+                $this->scheduleCommand($schedule, 'clean:tempfiles', $scheduleConfig['clean_temp_files']);
+            }
         }
 
         // Schedule logs:clean-old command
-        if (isset($scheduleConfig['clean_old_logs']) && $scheduleConfig['clean_old_logs']['enabled'] ?? true) {
-            $this->scheduleCommand($schedule, 'logs:clean-old', $scheduleConfig['clean_old_logs']);
+        if (isset($scheduleConfig['clean_old_logs'])) {
+            $enabled = $scheduleConfig['clean_old_logs']['enabled'] ?? true;
+            if ($enabled) {
+                $this->scheduleCommand($schedule, 'logs:clean-old', $scheduleConfig['clean_old_logs']);
+            }
         }
     }
 

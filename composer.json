@@ -1,12 +1,12 @@
 {
-    "name": "ray-crane/laravel-maintenance-tools",
+    "name": "longestdrive/laravel-maintenance-tools",
     "description": "This is my package laravel-maintenance-tools",
     "keywords": [
         "Longestdrive",
         "laravel",
         "laravel-maintenance-tools"
     ],
-    "homepage": "https://github.com/ray-crane/laravel-maintenance-tools",
+    "homepage": "https://github.com/longestdrive/laravel-maintenance-tools",
     "license": "MIT",
     "authors": [
         {

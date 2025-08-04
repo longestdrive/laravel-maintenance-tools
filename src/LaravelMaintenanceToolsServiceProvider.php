@@ -71,7 +71,7 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
         if (isset($scheduleConfig['clean_old_logs'])) {
             $enabled = $scheduleConfig['clean_old_logs']['enabled'] ?? true;
             if ($enabled) {
-                $this->scheduleCommand($schedule, 'logs:clean-old', $scheduleConfig['clean_old_logs']);
+                $this->scheduleCommand($schedule, 'clean:logs', $scheduleConfig['clean_old_logs']);
             }
         }
     }

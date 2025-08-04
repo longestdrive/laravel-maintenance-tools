@@ -108,7 +108,7 @@ class CleanOldLogFilesCommandTest extends TestCase
             ->once();
 
         // Run the command
-        $this->artisan('logs:clean-old')
+        $this->artisan('clean:logs')
             ->expectsOutput('Cleaning .gz log files older than 30 days from '.$this->logsPath)
             ->expectsOutput('Deleted: '.basename($gzFile).' (Created: 2022-12-01)')
             ->expectsOutput('Deleted 1 old .gz log files')
@@ -144,7 +144,7 @@ class CleanOldLogFilesCommandTest extends TestCase
         $this->filesystem->shouldNotReceive('delete');
 
         // Run the command
-        $this->artisan('logs:clean-old')
+        $this->artisan('clean:logs')
             ->expectsOutput('Cleaning .gz log files older than 30 days from '.$this->logsPath)
             ->expectsOutput('Deleted 0 old .gz log files')
             ->assertExitCode(0);
@@ -214,7 +214,7 @@ class CleanOldLogFilesCommandTest extends TestCase
             ->andReturn(false);
 
         // Run the command
-        $this->artisan('logs:clean-old')
+        $this->artisan('clean:logs')
             ->expectsOutput('Cleaning .gz log files older than 30 days from '.$this->logsPath)
             ->expectsOutput('Logs directory does not exist: '.$this->logsPath)
             ->assertExitCode(1);

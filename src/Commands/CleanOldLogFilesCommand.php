@@ -20,7 +20,7 @@ class CleanOldLogFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'logs:clean-old {--days=30 : Number of days to keep logs}';
+    protected $signature = 'clean:logs {--days=30 : Number of days to keep logs}';
 
     /**
      * The console command description.

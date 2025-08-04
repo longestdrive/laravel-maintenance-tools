@@ -61,7 +61,7 @@ php artisan vendor:publish --tag="laravel-maintenance-tools-views"
 The package provides several maintenance commands:
 
 - `clean:tempfiles`: Cleans temporary files from specified directories
-- `logs:clean-old`: Deletes old log files based on retention period
+- `clean:logs`: Deletes old log files based on retention period
 - `find:duplicates`: Finds duplicate classes and files in your application
 - `repair:migrations`: Repairs the migrations table
 - `scan:nontestmethods`: Scans for non-test methods in test classes
@@ -70,7 +70,7 @@ You can run these commands using Artisan:
 
 ```bash
 php artisan clean:tempfiles
-php artisan logs:clean-old
+php artisan clean:logs
 php artisan find:duplicates
 php artisan repair:migrations
 php artisan scan:nontestmethods

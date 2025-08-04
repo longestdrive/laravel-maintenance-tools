@@ -87,8 +87,8 @@ class ScheduleTest extends TestCase
         $this->assertEquals('0 1 * * 1', $cleanTempFilesEvent->expression);
 
         // Find the logs:clean-old event
-        $cleanOldLogsEvent = $this->findEventByCommand($events, 'logs:clean-old');
-        $this->assertNotNull($cleanOldLogsEvent, 'logs:clean-old command should be scheduled');
+        $cleanOldLogsEvent = $this->findEventByCommand($events, 'clean:logs');
+        $this->assertNotNull($cleanOldLogsEvent, 'clean:logs command should be scheduled');
 
         // Verify the cron expression for logs:clean-old (weekly on Monday at 02:00)
         $this->assertEquals('0 2 * * 1', $cleanOldLogsEvent->expression);
@@ -137,8 +137,8 @@ class ScheduleTest extends TestCase
         $events = $this->schedule->events();
 
         // Find the logs:clean-old event
-        $cleanOldLogsEvent = $this->findEventByCommand($events, 'logs:clean-old');
-        $this->assertNotNull($cleanOldLogsEvent, 'logs:clean-old command should be scheduled');
+        $cleanOldLogsEvent = $this->findEventByCommand($events, 'clean:logs');
+        $this->assertNotNull($cleanOldLogsEvent, 'clean:logs command should be scheduled');
 
         // Verify the cron expression for logs:clean-old (custom cron)
         $this->assertEquals('0 4 * * 1,4', $cleanOldLogsEvent->expression);

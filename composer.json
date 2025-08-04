@@ -1,6 +1,6 @@
 {
     "name": "longestdrive/laravel-maintenance-tools",
-    "description": "This is my package laravel-maintenance-tools",
+    "description": "This is my package laravel-maintenance-tools. It provides various tools to help with Laravel maintenance tasks.",
     "keywords": [
         "Longestdrive",
         "laravel",

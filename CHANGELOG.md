@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-maintenance-tools` will be documented in this file.
 
+## v2.0.2 Laravel 13 support - 2026-11-03
+
+Added Laravel 13 support and dropped Laravel 10
+
 ## 2.0.2 - 2026-11-03
 
 ### Fixed

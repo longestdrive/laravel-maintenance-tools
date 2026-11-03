@@ -7,9 +7,9 @@ This document explains how to use the scheduling functionality in the Laravel Ma
 The Laravel Maintenance Tools package now includes scheduling functionality for the following commands:
 
 - `clean:tempfiles`: Cleans temporary files from specified directories
-- `logs:clean-old`: Deletes old log files based on retention period
+- `clean:logs`: Deletes old log files based on retention period
 
-By default, these commands are scheduled to run weekly on Monday, with `clean:tempfiles` at 1:00 AM and `logs:clean-old` at 2:00 AM.
+By default, these commands are scheduled to run weekly on Monday, with `clean:tempfiles` at 1:00 AM and `clean:logs` at 2:00 AM.
 
 ## Configuration
 

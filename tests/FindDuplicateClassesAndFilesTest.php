@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Longestdrive\LaravelMaintenanceTools\Tests;
 
 use Illuminate\Filesystem\Filesystem;
+use Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles;
 
 class FindDuplicateClassesAndFilesTest extends TestCase
 {
@@ -14,11 +15,11 @@ class FindDuplicateClassesAndFilesTest extends TestCase
     {
         parent::setUp();
         // Register the command so output is captured
-        $this->app->singleton(\Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles::class, function ($app) {
-            return new \Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles;
+        $this->app->singleton(FindDuplicateClassesAndFiles::class, function ($app) {
+            return new FindDuplicateClassesAndFiles;
         });
         $this->app['Illuminate\\Contracts\\Console\\Kernel']->registerCommand(
-            $this->app->make(\Longestdrive\LaravelMaintenanceTools\Commands\FindDuplicateClassesAndFiles::class)
+            $this->app->make(FindDuplicateClassesAndFiles::class)
         );
         $this->testDir = base_path('tests/tmp_duplicates');
         if (! is_dir($this->testDir)) {

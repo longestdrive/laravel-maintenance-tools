@@ -185,6 +185,55 @@ class CleanOldLogFilesCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
+    public function test_it_uses_log_retention_days_config_when_no_option_given()
+    {
+        config()->set('maintenance-tools.log_retention_days', 10);
+
+        $gzFile = $this->logsPath.'/laravel-2023-01-15.log.gz'; // 16 days old
+
+        $this->filesystem->shouldReceive('exists')->with($this->logsPath)->once()->andReturn(true);
+        $this->filesystem->shouldReceive('glob')->with($this->logsPath.'/*.gz')->once()->andReturn([$gzFile]);
+        $this->filesystem->shouldReceive('lastModified')->with($gzFile)->once()
+            ->andReturn($this->now->copy()->subDays(16)->timestamp);
+        $this->filesystem->shouldReceive('delete')->with($gzFile)->once();
+
+        $this->artisan('clean:logs')
+            ->expectsOutput('Cleaning .gz log files older than 10 days from '.$this->logsPath)
+            ->expectsOutput('Deleted 1 old .gz log files')
+            ->assertExitCode(0);
+    }
+
+    public function test_days_option_overrides_log_retention_days_config()
+    {
+        config()->set('maintenance-tools.log_retention_days', 10);
+
+        $gzFile = $this->logsPath.'/laravel-2023-01-15.log.gz'; // 16 days old
+
+        $this->filesystem->shouldReceive('exists')->with($this->logsPath)->once()->andReturn(true);
+        $this->filesystem->shouldReceive('glob')->with($this->logsPath.'/*.gz')->once()->andReturn([$gzFile]);
+        $this->filesystem->shouldReceive('lastModified')->with($gzFile)->once()
+            ->andReturn($this->now->copy()->subDays(16)->timestamp);
+        $this->filesystem->shouldNotReceive('delete');
+
+        $this->artisan('clean:logs', ['--days' => 20])
+            ->expectsOutput('Cleaning .gz log files older than 20 days from '.$this->logsPath)
+            ->expectsOutput('Deleted 0 old .gz log files')
+            ->assertExitCode(0);
+    }
+
+    public function test_output_reflects_configured_log_file_extension()
+    {
+        config()->set('maintenance-tools.log_file_extension', '.zip');
+
+        $this->filesystem->shouldReceive('exists')->with($this->logsPath)->once()->andReturn(true);
+        $this->filesystem->shouldReceive('glob')->with($this->logsPath.'/*.zip')->once()->andReturn([]);
+
+        $this->artisan('clean:logs')
+            ->expectsOutput('Cleaning .zip log files older than 30 days from '.$this->logsPath)
+            ->expectsOutput('No .zip log files found in '.$this->logsPath)
+            ->assertExitCode(0);
+    }
+
     public function test_it_handles_empty_logs_directory()
     {
         // Mock filesystem methods

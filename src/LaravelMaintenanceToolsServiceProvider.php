@@ -23,8 +23,6 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-maintenance-tools')
             ->hasConfigFile('maintenance-tools')
-            ->hasViews()
-            ->hasMigration('create_laravel_maintenance_tools_table')
             ->hasCommands([
                 CleanOldLogFilesCommand::class,
                 CleanTemporaryFilesCommand::class,
@@ -67,7 +65,7 @@ class LaravelMaintenanceToolsServiceProvider extends PackageServiceProvider
             }
         }
 
-        // Schedule logs:clean-old command
+        // Schedule clean:logs command
         if (isset($scheduleConfig['clean_old_logs'])) {
             $enabled = $scheduleConfig['clean_old_logs']['enabled'] ?? true;
             if ($enabled) {

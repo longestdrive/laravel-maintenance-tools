@@ -1,6 +1,6 @@
 {
     "name": "longestdrive/laravel-maintenance-tools",
-    "description": "This is my package laravel-maintenance-tools. It provides various tools to help with Laravel maintenance tasks.",
+    "description": "Artisan commands for Laravel housekeeping: clean temp files and old logs on a schedule, find duplicate classes, repair the migrations table and find legacy @test methods.",
     "keywords": [
         "Longestdrive",
         "laravel",

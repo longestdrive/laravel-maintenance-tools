@@ -7,6 +7,7 @@ namespace Longestdrive\LaravelMaintenanceTools\Tests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Longestdrive\LaravelMaintenanceTools\Commands\RepairMigrationTableCommand;
 use Orchestra\Testbench\TestCase;
 
 class RepairMigrationTableCommandTest extends TestCase
@@ -19,12 +20,12 @@ class RepairMigrationTableCommandTest extends TestCase
 
         // Register the command
         $this->app->singleton(
-            \Longestdrive\LaravelMaintenanceTools\Commands\RepairMigrationTableCommand::class,
-            fn ($app) => new \Longestdrive\LaravelMaintenanceTools\Commands\RepairMigrationTableCommand
+            RepairMigrationTableCommand::class,
+            fn ($app) => new RepairMigrationTableCommand
         );
 
         $this->app['Illuminate\\Contracts\\Console\\Kernel']->registerCommand(
-            $this->app->make(\Longestdrive\LaravelMaintenanceTools\Commands\RepairMigrationTableCommand::class)
+            $this->app->make(RepairMigrationTableCommand::class)
         );
 
         // Ensure migrations table exists

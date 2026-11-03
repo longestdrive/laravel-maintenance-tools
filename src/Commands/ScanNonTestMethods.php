@@ -8,7 +8,7 @@ class ScanNonTestMethods extends Command
 {
     protected $signature = 'scan:nonTestMethods';
 
-    protected $description = 'Scan test classes for public methods not prefixed with "test" (excluding setUp) and log the results.';
+    protected $description = 'Find public test methods that rely on the @test docblock annotation (no "test" prefix), which PHPUnit 12 no longer runs, and log the results.';
 
     public function handle()
     {

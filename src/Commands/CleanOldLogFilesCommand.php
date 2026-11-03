@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Log;
 /**
  * Class CleanOldLogFilesCommand
  *
- * This command deletes redundant .gz log files in the storage/logs folder
- * where the creation date of the file is more than 30 days old.
+ * This command deletes archived log files (matching the configured
+ * `log_file_extension`, default .gz) in the storage/logs folder that are older
+ * than the configured `log_retention_days` (default 30) or the --days option.
  */
 class CleanOldLogFilesCommand extends Command
 {
@@ -20,14 +21,14 @@ class CleanOldLogFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'clean:logs {--days=30 : Number of days to keep logs}';
+    protected $signature = 'clean:logs {--days= : Number of days to keep logs (defaults to the log_retention_days config value)}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deletes .gz log files older than the specified number of days (default: 30)';
+    protected $description = 'Deletes archived log files older than the configured retention period';
 
     /**
      * The filesystem instance.
@@ -50,12 +51,12 @@ class CleanOldLogFilesCommand extends Command
      */
     public function handle()
     {
-        $days = (int) $this->option('days');
+        $days = (int) ($this->option('days') ?? config('maintenance-tools.log_retention_days', 30));
         $logsPath = storage_path('logs');
         $cutoffDate = Carbon::now()->subDays($days);
         $fileExtension = config('maintenance-tools.log_file_extension', '.gz');
 
-        $this->info("Cleaning .gz log files older than {$days} days from {$logsPath}");
+        $this->info("Cleaning {$fileExtension} log files older than {$days} days from {$logsPath}");
 
         // Check if the logs directory exists
         if (! $this->filesystem->exists($logsPath)) {
@@ -87,8 +88,8 @@ class CleanOldLogFilesCommand extends Command
             }
         }
 
-        $this->info("Deleted {$deletedCount} old .gz log files");
-        Log::info("Command logs:clean-old was run. Deleted {$deletedCount} old .gz log files");
+        $this->info("Deleted {$deletedCount} old {$fileExtension} log files");
+        Log::info("Command clean:logs was run. Deleted {$deletedCount} old {$fileExtension} log files");
 
         return 0;
     }

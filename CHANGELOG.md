@@ -2,6 +2,23 @@
 
 All notable changes to `laravel-maintenance-tools` will be documented in this file.
 
+## 2.0.1 - 2026-11-03
+
+### Fixed
+
+- `clean:logs` now respects the `log_retention_days` config value (previously ignored). The `--days` option still overrides it per run.
+- `clean:logs` output and log messages now show the configured `log_file_extension` instead of always saying `.gz`, and refer to the command as `clean:logs` instead of `logs:clean-old`.
+- `scan:nonTestMethods` description now matches its behaviour: it finds public methods relying on the `@test` docblock annotation, which PHPUnit 12 no longer runs.
+
+### Removed
+
+- Broken migration and views publishing (`laravel-maintenance-tools-migrations` / `laravel-maintenance-tools-views` tags). The migration stub was an empty placeholder whose filename didn't match the registered name, and the package has no views.
+
+### Documentation
+
+- Rewrote the README with a full description of each command, configuration and scheduling.
+- Updated the package description in `composer.json`, and the command name in `SCHEDULING.md`.
+
 ## 2.0.0 - 2026-11-03
 
 ### Breaking changes

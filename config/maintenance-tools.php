@@ -16,7 +16,7 @@ return [
     ],
 
     /*
-     * log file extension for the clean:oldlogs command
+     * log file extension for the clean:logs command
      * This is used to identify which log files should be cleaned
      */
     'log_file_extension' => '.gz',
@@ -26,7 +26,8 @@ return [
     | Log Files Configuration
     |--------------------------------------------------------------------------
     |
-    | Configure the number of days to keep log files
+    | Configure the number of days to keep log files. Used by clean:logs
+    | (including scheduled runs) unless the --days option is passed.
     |
     */
     'log_retention_days' => 30,

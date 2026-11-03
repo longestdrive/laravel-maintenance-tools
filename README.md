@@ -26,6 +26,8 @@ Laravel apps collect clutter over time: temporary upload folders fill up, rotate
 - PHP 8.3+
 - Laravel 11, 12 or 13
 
+> **Note:** Laravel 11 is end-of-life and no longer gets security fixes. It's still supported here, but upgrading your application to Laravel 12 or 13 is strongly recommended.
+
 ## Installation
 
 Install the package via Composer:

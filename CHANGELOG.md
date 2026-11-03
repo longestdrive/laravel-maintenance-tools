@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-maintenance-tools` will be documented in this file.
 
+## 2.0.2 - 2026-11-03
+
+### Fixed
+
+- CI: the Laravel 11 test jobs failed to install because Composer blocks packages with security advisories, and every Laravel 11 release (now end-of-life) is affected. The L11 jobs now set `COMPOSER_NO_SECURITY_BLOCKING`, so the package is tested against Laravel 11 again. Laravel 12 and 13 jobs are unaffected.
+
+### Documentation
+
+- README notes that Laravel 11 is end-of-life and recommends upgrading to Laravel 12 or 13.
+
 ## 2.0.1 - 2026-11-03
 
 ### Fixed

@@ -52,6 +52,11 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
+        env:
+          # Laravel 11 is end-of-life and every release has unpatched security
+          # advisories, which Composer refuses to install by default. Allow them
+          # for the L11 jobs only so the package can still be tested against it.
+          COMPOSER_NO_SECURITY_BLOCKING: ${{ matrix.laravel == '11.*' && '1' || '' }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
